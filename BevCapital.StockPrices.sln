@@ -3,15 +3,31 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30517.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BevCapital.StockPrices.API", "src\BevCapital.StockPrices.API\BevCapital.StockPrices.API.csproj", "{05C7B9A7-7B94-46ED-91CB-77653FD11BFA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BevCapital.StockPrices.Job", "src\BevCapital.StockPrices.Job\BevCapital.StockPrices.Job.csproj", "{05C7B9A7-7B94-46ED-91CB-77653FD11BFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BevCapital.StockPrices.Application", "src\BevCapital.StockPrices.Application\BevCapital.StockPrices.Application.csproj", "{E6202883-8100-4B8E-82A5-A3B969842D1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BevCapital.StockPrices.Application", "src\BevCapital.StockPrices.Application\BevCapital.StockPrices.Application.csproj", "{E6202883-8100-4B8E-82A5-A3B969842D1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BevCapital.StockPrices.Domain", "src\BevCapital.StockPrices.Domain\BevCapital.StockPrices.Domain.csproj", "{1BCB083F-DF09-4B03-9F10-912741CED236}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BevCapital.StockPrices.Domain", "src\BevCapital.StockPrices.Domain\BevCapital.StockPrices.Domain.csproj", "{1BCB083F-DF09-4B03-9F10-912741CED236}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BevCapital.StockPrices.Data", "src\BevCapital.StockPrices.Data\BevCapital.StockPrices.Data.csproj", "{1CF3D95A-178C-405B-A7C9-A74BB84BCED3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BevCapital.StockPrices.Data", "src\BevCapital.StockPrices.Data\BevCapital.StockPrices.Data.csproj", "{1CF3D95A-178C-405B-A7C9-A74BB84BCED3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BevCapital.StockPrices.Infra", "src\BevCapital.StockPrices.Infra\BevCapital.StockPrices.Infra.csproj", "{3636FEF9-61A5-4CF3-9288-32D17664A8B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BevCapital.StockPrices.Infra", "src\BevCapital.StockPrices.Infra\BevCapital.StockPrices.Infra.csproj", "{3636FEF9-61A5-4CF3-9288-32D17664A8B5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01-Job", "01-Job", "{A29910D8-90BA-4908-9409-E4C0A68B4C28}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02-Application", "02-Application", "{8084A8E4-6CEA-4B28-AE98-C289B53FDF61}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03-Domain", "03-Domain", "{711AFB65-3C8B-488A-9BA6-8053F0011E38}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04-Data", "04-Data", "{BC6BAE65-3C29-4FA1-A85C-4A813F88CF95}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05-Infra", "05-Infra", "{3CE34B89-E15C-4BBF-941F-7EED312E8B3E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BevCapital.StockPrices.Background", "src\BevCapital.StockPrices.Background\BevCapital.StockPrices.Background.csproj", "{E0FFE708-CE18-4CDF-9831-FD841BA4AA62}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2B0307AE-212E-43D8-83D0-624C039AE973}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BevCapital.StockPrices.Domain.Tests", "src\BevCapital.StockPrices.Domain.Tests\BevCapital.StockPrices.Domain.Tests.csproj", "{454B02B2-3267-4CF9-B3C6-8C69643EBFDD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,9 +55,26 @@ Global
 		{3636FEF9-61A5-4CF3-9288-32D17664A8B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3636FEF9-61A5-4CF3-9288-32D17664A8B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3636FEF9-61A5-4CF3-9288-32D17664A8B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0FFE708-CE18-4CDF-9831-FD841BA4AA62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0FFE708-CE18-4CDF-9831-FD841BA4AA62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0FFE708-CE18-4CDF-9831-FD841BA4AA62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0FFE708-CE18-4CDF-9831-FD841BA4AA62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{454B02B2-3267-4CF9-B3C6-8C69643EBFDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{454B02B2-3267-4CF9-B3C6-8C69643EBFDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{454B02B2-3267-4CF9-B3C6-8C69643EBFDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{454B02B2-3267-4CF9-B3C6-8C69643EBFDD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{05C7B9A7-7B94-46ED-91CB-77653FD11BFA} = {A29910D8-90BA-4908-9409-E4C0A68B4C28}
+		{E6202883-8100-4B8E-82A5-A3B969842D1F} = {8084A8E4-6CEA-4B28-AE98-C289B53FDF61}
+		{1BCB083F-DF09-4B03-9F10-912741CED236} = {711AFB65-3C8B-488A-9BA6-8053F0011E38}
+		{1CF3D95A-178C-405B-A7C9-A74BB84BCED3} = {BC6BAE65-3C29-4FA1-A85C-4A813F88CF95}
+		{3636FEF9-61A5-4CF3-9288-32D17664A8B5} = {3CE34B89-E15C-4BBF-941F-7EED312E8B3E}
+		{E0FFE708-CE18-4CDF-9831-FD841BA4AA62} = {3CE34B89-E15C-4BBF-941F-7EED312E8B3E}
+		{454B02B2-3267-4CF9-B3C6-8C69643EBFDD} = {2B0307AE-212E-43D8-83D0-624C039AE973}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {222BC284-726F-458C-882E-09AC7A0D0470}
