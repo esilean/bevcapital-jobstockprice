@@ -21,7 +21,8 @@ namespace BevCapital.StockPrices.Data.Repositories
 
         public async Task<List<StockPrice>> GetAll()
         {
-            return await _stockPriceContext.StockPrices.ToListAsync();
+            return await _stockPriceContext.StockPrices
+                                           .ToListAsync();
         }
 
         public async Task SaveChanges()
@@ -44,11 +45,11 @@ namespace BevCapital.StockPrices.Data.Repositories
                             var proposedValue = proposedValues[property];
                             var databaseValue = databaseValues[property];
 
-                            proposedValues[property] = proposedValue;
+                            proposedValues[property] = databaseValue;
                         }
 
                         // Refresh original values to bypass next concurrency check
-                        entry.OriginalValues.SetValues(databaseValues);
+                        entry.OriginalValues.SetValues(proposedValues);
                     }
                     else
                     {

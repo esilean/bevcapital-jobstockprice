@@ -15,7 +15,7 @@ namespace BevCapital.StockPrices.Domain.Entities
         public decimal DelayedPrice { get; private set; }
         public DateTime DelayedPriceTime { get; private set; }
         public decimal PreviousClosePrice { get; private set; }
-        public decimal ChangePercent { get; private set; }
+        public decimal? ChangePercent { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime UpdatedAt { get; private set; }
 
