@@ -30,7 +30,7 @@ namespace BevCapital.StockPrices.Domain.Tests.Entities
                                                previousClosePrice, changePercent);
 
             // ASSERT
-            Assert.Equal(symbol, stockPrice.Symbol);
+            Assert.Equal(symbol, stockPrice.Id);
             Assert.Equal(open, stockPrice.Open);
             Assert.Equal(close, stockPrice.Close);
             Assert.Equal(high, stockPrice.High);

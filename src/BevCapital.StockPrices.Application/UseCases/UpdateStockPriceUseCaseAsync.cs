@@ -67,7 +67,7 @@ namespace BevCapital.StockPrices.Application.UseCases
             var shouldUpdate = false;
             foreach (var sp in stockPrices)
             {
-                var finnhubModel = await _finnhubService.GetQuote(sp.Symbol);
+                var finnhubModel = await _finnhubService.GetQuote(sp.Id);
                 if (finnhubModel == null)
                     continue;
 

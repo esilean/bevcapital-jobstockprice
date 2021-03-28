@@ -5,7 +5,7 @@ namespace BevCapital.StockPrices.Domain.Entities
 {
     public class StockPrice : Entity
     {
-        public string Symbol { get; private set; }
+        public string Id { get; private set; }
         public decimal Open { get; private set; }
         public decimal Close { get; private set; }
         public decimal High { get; private set; }
@@ -16,8 +16,6 @@ namespace BevCapital.StockPrices.Domain.Entities
         public DateTime DelayedPriceTime { get; private set; }
         public decimal PreviousClosePrice { get; private set; }
         public decimal? ChangePercent { get; private set; }
-        public DateTime CreatedAt { get; private set; }
-        public DateTime UpdatedAt { get; private set; }
 
         /// <summary>
         /// EF Constructor
@@ -28,10 +26,9 @@ namespace BevCapital.StockPrices.Domain.Entities
                           decimal open, decimal close, decimal high, decimal low,
                           decimal latestPrice, DateTime latestPriceTime,
                           decimal delayedPrice, DateTime delayedPriceTime,
-                          decimal previousClosePrice, decimal changePercent,
-                          DateTime createdAt, DateTime updatedAt)
+                          decimal previousClosePrice, decimal changePercent)
         {
-            Symbol = symbol;
+            Id = symbol;
             Open = open;
             Close = close;
             High = high;
@@ -42,8 +39,6 @@ namespace BevCapital.StockPrices.Domain.Entities
             DelayedPriceTime = delayedPriceTime;
             PreviousClosePrice = previousClosePrice;
             ChangePercent = changePercent;
-            CreatedAt = createdAt;
-            UpdatedAt = updatedAt;
 
             Validate(this, new StockPriceValidator());
         }
@@ -58,8 +53,7 @@ namespace BevCapital.StockPrices.Domain.Entities
                                   open, close, high, low,
                                   latestPrice, latestPriceTime,
                                   delayedPrice, delayedPriceTime,
-                                  previousClosePrice, changePercent,
-                                  DateTime.Now.ToUniversalTime(), DateTime.Now.ToUniversalTime());
+                                  previousClosePrice, changePercent);
         }
 
         public void SetPrice(decimal open, decimal high, decimal low, decimal latestPrice, DateTime latestPriceTime,
@@ -77,14 +71,13 @@ namespace BevCapital.StockPrices.Domain.Entities
             PreviousClosePrice = previousClosePrice;
             ChangePercent = changePercent;
 
-            UpdatedAt = DateTime.Now.ToUniversalTime();
         }
 
         internal class StockPriceValidator : AbstractValidator<StockPrice>
         {
             public StockPriceValidator()
             {
-                RuleFor(a => a.Symbol)
+                RuleFor(a => a.Id)
                     .NotEmpty()
                     .WithMessage("Invalid symbol");
 

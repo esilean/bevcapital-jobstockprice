@@ -9,45 +9,47 @@ namespace BevCapital.StockPrices.Data.Context.Config
         public void Configure(EntityTypeBuilder<StockPrice> builder)
         {
             builder.ToTable("Stocks_StockPrices");
-            builder.HasKey(r => r.Symbol);
+            builder.HasKey(r => r.Id);
 
-            builder.Property(e => e.Symbol)
-                .HasMaxLength(20)
-                .IsRequired();
+            builder.Property(e => e.Id)
+                   .HasMaxLength(20)
+                   .IsRequired();
             builder.Property(e => e.Open)
-                .HasColumnType<decimal>("decimal(10,5)")
-                .IsRequired();
+                   .HasColumnType<decimal>("decimal(10,5)")
+                   .IsRequired();
             builder.Property(e => e.Close)
-                .HasColumnType<decimal>("decimal(10,5)")
-                .IsRequired();
+                   .HasColumnType<decimal>("decimal(10,5)")
+                   .IsRequired();
             builder.Property(e => e.High)
-                .HasColumnType<decimal>("decimal(10,5)")
-                .IsRequired();
+                   .HasColumnType<decimal>("decimal(10,5)")
+                   .IsRequired();
             builder.Property(e => e.Low)
-                .HasColumnType<decimal>("decimal(10,5)")
-                .IsRequired();
+                   .HasColumnType<decimal>("decimal(10,5)")
+                   .IsRequired();
             builder.Property(e => e.LatestPrice)
-                .HasColumnType<decimal>("decimal(10,5)")
-                .IsRequired();
+                   .HasColumnType<decimal>("decimal(10,5)")
+                   .IsRequired();
             builder.Property(e => e.LatestPriceTime)
-                .IsRequired();
+                   .IsRequired();
             builder.Property(e => e.DelayedPrice)
-                .HasColumnType<decimal>("decimal(10,5)")
-                .IsRequired();
+                   .HasColumnType<decimal>("decimal(10,5)")
+                   .IsRequired();
             builder.Property(e => e.DelayedPriceTime)
-                .IsRequired();
+                   .IsRequired();
             builder.Property(e => e.PreviousClosePrice)
-                .HasColumnType<decimal>("decimal(10,5)")
-                .IsRequired();
+                   .HasColumnType<decimal>("decimal(10,5)")
+                   .IsRequired();
             builder.Property(e => e.ChangePercent)
-                .HasColumnType<decimal?>("decimal(10,5)");
-            builder.Property(e => e.CreatedAt)
-                .IsRequired();
-            builder.Property(e => e.UpdatedAt)
-                .IsRequired();
+                   .HasColumnType<decimal?>("decimal(10,5)");
+            builder.Property(e => e.CreatedAtUtc)
+                   .ValueGeneratedOnAdd()
+                   .IsRequired();
+            builder.Property(e => e.UpdatedAtUtc)
+                   .ValueGeneratedOnAddOrUpdate()
+                   .IsRequired();
 
             builder.Property(e => e.RowVersion)
-                .IsRowVersion();
+                   .IsRowVersion();
 
             builder.Ignore(e => e.Valid);
             builder.Ignore(e => e.Invalid);
