@@ -82,7 +82,7 @@ Resources:
           Memory: 128
           Image: !Ref "ServiceImageUrl"
           PortMappings:
-            - ContainerPort: 80
+            - ContainerPort: 0
               HostPort: 0
           Links:
             - xray-daemon
@@ -103,21 +103,21 @@ Resources:
               awslogs-group: !Sub ${EnvironmentName}-service-${ServiceName}
               awslogs-region: !Ref "AWS::Region"
               awslogs-stream-prefix: !Sub ${EnvironmentName}-${ServiceName}
-        - Name: xray-daemon
-          Cpu: 128
-          Memory: 128
-          Essential: false
-          Image: !Ref "XRayImageUrl"
-          PortMappings:
-            - ContainerPort: !Ref XRayContainerPort
-              HostPort: !Ref XRayContainerPort
-              Protocol: udp
-          LogConfiguration:
-            LogDriver: "awslogs"
-            Options:
-              awslogs-group: !Sub ${EnvironmentName}-service-${ServiceName}
-              awslogs-region: !Ref "AWS::Region"
-              awslogs-stream-prefix: !Sub ${EnvironmentName}-${ServiceName}-xray
+        # - Name: xray-daemon
+        #   Cpu: 128
+        #   Memory: 128
+        #   Essential: false
+        #   Image: !Ref "XRayImageUrl"
+        #   PortMappings:
+        #     - ContainerPort: !Ref XRayContainerPort
+        #       HostPort: !Ref XRayContainerPort
+        #       Protocol: udp
+        #   LogConfiguration:
+        #     LogDriver: "awslogs"
+        #     Options:
+        #       awslogs-group: !Sub ${EnvironmentName}-service-${ServiceName}
+        #       awslogs-region: !Ref "AWS::Region"
+        #       awslogs-stream-prefix: !Sub ${EnvironmentName}-${ServiceName}-xray
 
   # The service. The service is a resource which allows you to run multiple
   # copies of a type of task, and gather up their logs and metrics, as well
