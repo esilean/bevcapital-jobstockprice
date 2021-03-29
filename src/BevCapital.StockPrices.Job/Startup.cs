@@ -26,20 +26,23 @@ namespace BevCapital.StockPrices.Job
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSecrets(Configuration);
+
             services
-                    .ConfigureCommonServices(Configuration)
-                    .ConfigureSecurity()
-                    .ConfigureDistributedCache(Configuration)
-                    .ConfigureAWS(Configuration, HostingEnvironment)
-                    .ConfigureDatabase(Configuration)
-                    .ConfigureHttpClients(Configuration)
-                    .ConfigureBackgroundServices()
-                    .ConfigureHealthCheck(Configuration);
+                    .AddAppCore(Configuration)
+                    .AddAppSecurity()
+                    .AddAppDistributedCache(Configuration)
+                    .AddAppAWS(Configuration, HostingEnvironment)
+                    .AddAppDatabase(Configuration)
+                    .AddAppHttpClients(Configuration)
+                    .AddAppBackgroundServices()
+                    .AddAppHealthCheck(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             Log.Information($"Hosting enviroment = {env.EnvironmentName}");
+            Log.Information($"RDS_ENDPOINT = {Environment.GetEnvironmentVariable("RDS_ENDPOINT")}");
 
             if (env.IsDevelopment())
             {

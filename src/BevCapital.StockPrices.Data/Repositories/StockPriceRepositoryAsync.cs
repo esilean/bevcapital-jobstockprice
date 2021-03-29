@@ -3,6 +3,7 @@ using BevCapital.StockPrices.Domain.Entities;
 using BevCapital.StockPrices.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,10 +12,14 @@ namespace BevCapital.StockPrices.Data.Repositories
 {
     public class StockPriceRepositoryAsync : IStockPriceRepositoryAsync
     {
+        private readonly ILogger<StockPriceRepositoryAsync> _logger;
         private readonly StockPriceContext _stockPriceContext;
 
-        public StockPriceRepositoryAsync(IServiceProvider serviceProvider)
+        public StockPriceRepositoryAsync(IServiceProvider serviceProvider,
+                                         ILogger<StockPriceRepositoryAsync> logger)
         {
+            _logger = logger;
+
             IServiceScope scope = serviceProvider.CreateScope();
             _stockPriceContext = scope.ServiceProvider.GetService<StockPriceContext>();
         }
@@ -59,11 +64,16 @@ namespace BevCapital.StockPrices.Data.Repositories
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+            }
         }
 
-        public async ValueTask DisposeAsync()
+        public void Dispose()
         {
-            await _stockPriceContext.DisposeAsync();
+            _stockPriceContext.Dispose();
         }
+
     }
 }

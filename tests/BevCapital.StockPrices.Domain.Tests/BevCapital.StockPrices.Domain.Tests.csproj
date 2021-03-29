@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BevCapital.StockPrices.Domain\BevCapital.StockPrices.Domain.csproj" />
+    <ProjectReference Include="..\..\src\BevCapital.StockPrices.Domain\BevCapital.StockPrices.Domain.csproj" />
   </ItemGroup>
 
 </Project>

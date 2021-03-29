@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BevCapital.StockPrices.Domain.Repositories
 {
-    public interface IStockPriceRepositoryAsync : IAsyncDisposable
+    public interface IStockPriceRepositoryAsync : IDisposable
     {
         /// <summary>
         /// 

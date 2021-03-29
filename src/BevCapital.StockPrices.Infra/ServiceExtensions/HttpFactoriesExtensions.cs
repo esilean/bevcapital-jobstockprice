@@ -13,7 +13,7 @@ namespace BevCapital.StockPrices.Infra.ServiceExtensions
 
     public static class HttpFactoriesExtensions
     {
-        public static IServiceCollection ConfigureHttpClients(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddAppHttpClients(this IServiceCollection services, IConfiguration configuration)
         {
             var finnhubService = configuration.GetSection(HttpServices.FinnhubServiceName);
 
@@ -21,7 +21,7 @@ namespace BevCapital.StockPrices.Infra.ServiceExtensions
             services.AddHttpClient(HttpServices.FinnhubServiceName, client =>
             {
                 client.BaseAddress = new Uri($"{finnhubService["BaseAddress"]}/");
-                client.Timeout = TimeSpan.FromSeconds(20);
+                client.Timeout = TimeSpan.FromSeconds(5);
             })
             .AddHttpMessageHandler<FinnhubTokenMessageHandler>()
             .ConfigurePrimaryHttpMessageHandler(() =>

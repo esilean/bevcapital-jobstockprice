@@ -56,7 +56,7 @@ namespace BevCapital.StockPrices.Infra.PricesServices.Finnhub
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    _logger.LogError("Error retrieving quote from Finnhub");
+                    _logger.LogError($"Error retrieving quote from Finnhub {response.StatusCode}");
                     return null;
                 }
 

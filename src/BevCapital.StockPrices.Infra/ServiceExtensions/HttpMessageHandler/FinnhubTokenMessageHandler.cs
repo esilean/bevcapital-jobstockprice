@@ -27,8 +27,6 @@ namespace BevCapital.StockPrices.Infra.ServiceExtensions.HttpMessageHandler
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Adding Token...");
-
             var awsTokenSecret = await _tokenSecret.GetSecretAsync(_finnhubToken);
             if (!string.IsNullOrWhiteSpace(awsTokenSecret))
             {

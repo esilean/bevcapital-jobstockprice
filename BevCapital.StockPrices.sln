@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BevCapital.StockPrices.Back
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2B0307AE-212E-43D8-83D0-624C039AE973}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BevCapital.StockPrices.Domain.Tests", "src\BevCapital.StockPrices.Domain.Tests\BevCapital.StockPrices.Domain.Tests.csproj", "{454B02B2-3267-4CF9-B3C6-8C69643EBFDD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BevCapital.StockPrices.Domain.Tests", "tests\BevCapital.StockPrices.Domain.Tests\BevCapital.StockPrices.Domain.Tests.csproj", "{454B02B2-3267-4CF9-B3C6-8C69643EBFDD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

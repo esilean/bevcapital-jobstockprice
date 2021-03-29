@@ -6,7 +6,7 @@ namespace BevCapital.StockPrices.Infra.ServiceExtensions
 {
     public static class BackgoundServicesExtensions
     {
-        public static IServiceCollection ConfigureBackgroundServices(this IServiceCollection services)
+        public static IServiceCollection AddAppBackgroundServices(this IServiceCollection services)
         {
             services.AddHostedService<UpdateStockPriceBackgroundService>();
 
