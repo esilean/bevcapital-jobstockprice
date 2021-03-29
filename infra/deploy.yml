@@ -82,7 +82,7 @@ Resources:
           Memory: 128
           Image: !Ref "ServiceImageUrl"
           PortMappings:
-            - ContainerPort: 0
+            - ContainerPort: 80
               HostPort: 0
           # Links:
           #   - xray-daemon
