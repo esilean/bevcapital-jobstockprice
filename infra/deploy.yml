@@ -35,11 +35,6 @@ Parameters:
     Default: ""
     Description: The ECS service auto scaling role ARN
 
-  ServiceContainerPort:
-    Type: Number
-    Default: 5010
-    Description: What port number the application inside the docker container is binding to
-
   XRayContainerPort:
     Type: Number
     Default: 2000
@@ -88,7 +83,7 @@ Resources:
           Image: !Ref "ServiceImageUrl"
           PortMappings:
             - ContainerPort: 80
-              HostPort: !Ref ServiceContainerPort
+              HostPort: 0
           Links:
             - xray-daemon
           Environment:
