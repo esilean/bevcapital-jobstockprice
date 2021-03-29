@@ -74,8 +74,8 @@ Resources:
     Properties:
       Family: !Ref "ServiceName"
       NetworkMode: bridge
-      Cpu: 512
-      Memory: 512
+      Cpu: 384
+      Memory: 384
       TaskRoleArn:
         Fn::If:
           - "HasCustomRole"
