@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: "2010-09-09"
+AWSTemplateFormatVersion: 2010-09-09
 Description: Deploy a cronjob service into an ECS cluster.
 Parameters:
   EnvironmentName:
@@ -20,19 +20,21 @@ Parameters:
     Default: job-stockprice
     Description: A name for the service
 
+  JobUpdatePriceIntervalInSeconds:
+    Type: Number
+    Default: 30
+    Description: Interval in seconds that the job gets stocks price in stock provider
+
   ServiceImageUrl:
     Type: String
-    Default: ""
     Description: The url of a docker image that contains the application
 
   XRayImageUrl:
     Type: String
-    Default: ""
     Description: The url of a docker image that contains the xray-daemon
 
   ECSServiceAutoScalingRoleARN:
     Type: String
-    Default: ""
     Description: The ECS service auto scaling role ARN
 
   XRayContainerPort:
@@ -53,7 +55,7 @@ Parameters:
       access other AWS resources like S3 buckets, DynamoDB tables, etc
 
 Conditions:
-  HasCustomRole: !Not [!Equals [!Ref "Role", ""]]
+  HasCustomRole: !Not [!Equals [!Ref Role, ""]]
 
 Resources:
   # A log group for storing the stdout logs from this service's containers
@@ -67,20 +69,20 @@ Resources:
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
     Properties:
-      Family: !Ref "ServiceName"
+      Family: !Ref ServiceName
       NetworkMode: bridge
       Cpu: 384
       Memory: 384
       TaskRoleArn:
         Fn::If:
           - "HasCustomRole"
-          - !Ref "Role"
-          - !Ref "AWS::NoValue"
+          - !Ref Role
+          - !Ref AWS::NoValue
       ContainerDefinitions:
-        - Name: !Ref "ServiceName"
+        - Name: !Ref ServiceName
           Cpu: 128
           Memory: 128
-          Image: !Ref "ServiceImageUrl"
+          Image: !Ref ServiceImageUrl
           PortMappings:
             - ContainerPort: 80
               HostPort: 0
@@ -89,9 +91,11 @@ Resources:
           Environment:
             - name: AWS_XRAY_DAEMON_ADDRESS
               value: !Sub xray-daemon:${XRayContainerPort}
+            - name: UpdateStockPriceBackgroundServiceSettings__IntervalInSeconds
+              value: !Ref JobUpdatePriceIntervalInSeconds
             - name: RDS_ENDPOINT
               value: !ImportValue
-                "Fn::Sub": "RDSBevCapital-Endpoint"
+                "Fn::Sub": "DBInstance-Endpoint"
             - name: RDS_PASSWORD
               value:
                 !Join [
@@ -127,13 +131,13 @@ Resources:
             LogDriver: "awslogs"
             Options:
               awslogs-group: !Sub ${EnvironmentName}-service-${ServiceName}
-              awslogs-region: !Ref "AWS::Region"
+              awslogs-region: !Ref AWS::Region
               awslogs-stream-prefix: !Sub ${EnvironmentName}-${ServiceName}
         - Name: xray-daemon
           Cpu: 128
           Memory: 128
           Essential: false
-          Image: !Ref "XRayImageUrl"
+          Image: !Ref XRayImageUrl
           PortMappings:
             - ContainerPort: !Ref XRayContainerPort
               HostPort: 0
@@ -142,7 +146,7 @@ Resources:
             LogDriver: "awslogs"
             Options:
               awslogs-group: !Sub ${EnvironmentName}-service-${ServiceName}
-              awslogs-region: !Ref "AWS::Region"
+              awslogs-region: !Ref AWS::Region
               awslogs-stream-prefix: !Sub ${EnvironmentName}-${ServiceName}-xray
 
   # The service. The service is a resource which allows you to run multiple
@@ -156,8 +160,8 @@ Resources:
       DeploymentConfiguration:
         MaximumPercent: 200
         MinimumHealthyPercent: 75
-      DesiredCount: !Ref "DesiredCount"
-      TaskDefinition: !Ref "TaskDefinition"
+      DesiredCount: !Ref DesiredCount
+      TaskDefinition: !Ref TaskDefinition
 
   # Enable autoscaling for this service
   ScalableTarget:
@@ -170,11 +174,11 @@ Resources:
         Fn::Join:
           - "/"
           - - service
-            - !Ref "Cluster"
-            - !Ref "ServiceName"
+            - !Ref Cluster
+            - !Ref ServiceName
       MinCapacity: 1
       MaxCapacity: 5
-      RoleARN: !Ref "ECSServiceAutoScalingRoleARN"
+      RoleARN: !Ref ECSServiceAutoScalingRoleARN
 
   # Create scaling policies for the service
   ScaleDownPolicy:
@@ -185,16 +189,16 @@ Resources:
         Fn::Join:
           - "/"
           - - scale
-            - !Ref "EnvironmentName"
-            - !Ref "ServiceName"
+            - !Ref EnvironmentName
+            - !Ref ServiceName
             - down
       PolicyType: StepScaling
       ResourceId:
         Fn::Join:
           - "/"
           - - service
-            - !Ref "Cluster"
-            - !Ref "ServiceName"
+            - !Ref Cluster
+            - !Ref ServiceName
       ScalableDimension: "ecs:service:DesiredCount"
       ServiceNamespace: "ecs"
       StepScalingPolicyConfiguration:
@@ -213,16 +217,16 @@ Resources:
         Fn::Join:
           - "/"
           - - scale
-            - !Ref "EnvironmentName"
-            - !Ref "ServiceName"
+            - !Ref EnvironmentName
+            - !Ref ServiceName
             - up
       PolicyType: StepScaling
       ResourceId:
         Fn::Join:
           - "/"
           - - service
-            - !Ref "Cluster"
-            - !Ref "ServiceName"
+            - !Ref Cluster
+            - !Ref ServiceName
       ScalableDimension: "ecs:service:DesiredCount"
       ServiceNamespace: "ecs"
       StepScalingPolicyConfiguration:
@@ -247,22 +251,22 @@ Resources:
         Fn::Join:
           - "-"
           - - low-cpu
-            - !Ref "EnvironmentName"
-            - !Ref "ServiceName"
+            - !Ref EnvironmentName
+            - !Ref ServiceName
       AlarmDescription:
         Fn::Join:
           - " "
           - - "Low CPU utilization for service"
-            - !Ref "ServiceName"
+            - !Ref ServiceName
             - "in environment"
-            - !Ref "EnvironmentName"
+            - !Ref EnvironmentName
       MetricName: CPUUtilization
       Namespace: AWS/ECS
       Dimensions:
         - Name: ServiceName
-          Value: !Ref "ServiceName"
+          Value: !Ref ServiceName
         - Name: ClusterName
-          Value: !Ref "Cluster"
+          Value: !Ref Cluster
       Statistic: Average
       Period: 60
       EvaluationPeriods: 1
@@ -278,22 +282,22 @@ Resources:
         Fn::Join:
           - "-"
           - - high-cpu
-            - !Ref "EnvironmentName"
-            - !Ref "ServiceName"
+            - !Ref EnvironmentName
+            - !Ref ServiceName
       AlarmDescription:
         Fn::Join:
           - " "
           - - "High CPU utilization for service"
-            - !Ref "ServiceName"
+            - !Ref ServiceName
             - "in environment"
-            - !Ref "EnvironmentName"
+            - !Ref EnvironmentName
       MetricName: CPUUtilization
       Namespace: AWS/ECS
       Dimensions:
         - Name: ServiceName
-          Value: !Ref "ServiceName"
+          Value: !Ref ServiceName
         - Name: ClusterName
-          Value: !Ref "Cluster"
+          Value: !Ref Cluster
       Statistic: Average
       Period: 60
       EvaluationPeriods: 1

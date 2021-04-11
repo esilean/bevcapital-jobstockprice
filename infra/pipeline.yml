@@ -3,7 +3,6 @@ Description: Creates a pipeline and deploys a service into an ECS cluster.
 Parameters:
   AccoundId:
     Type: String
-    Default: ""
     Description: The AWS Account Id
 
   EnvironmentName:
@@ -22,7 +21,6 @@ Parameters:
 
   ECSServiceAutoScalingRoleARN:
     Type: String
-    Default: ""
     Description: The ECS service auto scaling role ARN
 
   DesiredCount:
@@ -111,7 +109,7 @@ Resources:
     DependsOn:
       - ECRServiceRepository
       - ECRXrayRepository
-    Type: "AWS::CodePipeline::Pipeline"
+    Type: AWS::CodePipeline::Pipeline
     Properties:
       RoleArn: !GetAtt PipelineRole.Arn
       ArtifactStore:
@@ -138,17 +136,17 @@ Resources:
                 - Name: SourceArtifact
         - Name: Build
           Actions:
-            # - Name: ValidateTemplate
-            #   RunOrder: 1
-            #   InputArtifacts:
-            #     - Name: SourceArtifact
-            #   ActionTypeId:
-            #     Category: Test
-            #     Owner: AWS
-            #     Version: 1
-            #     Provider: CodeBuild
-            #   Configuration:
-            #     ProjectName: !Ref CodeBuildIntegrationProject
+            - Name: ValidateTemplate
+              RunOrder: 1
+              InputArtifacts:
+                - Name: SourceArtifact
+              ActionTypeId:
+                Category: Test
+                Owner: AWS
+                Version: 1
+                Provider: CodeBuild
+              Configuration:
+                ProjectName: !Ref CodeBuildIntegrationProject
             - Name: GetECRImages
               RunOrder: 2
               InputArtifacts:
